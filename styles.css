@@ -28,13 +28,16 @@ body {
 	font-size: 20px;
 	padding: 5px 5px;
 	border: 1px solid #e5e5e5;
+	font-family: 'Open Sans', sans-serif;
 }
 .word, .word-multi {
 	color: #c0392b;
-	font-weight: bold;
+	font-weight: 700;
 }
 .or, .and, .not {
 	color: #27ae60;
+	font-weight: 800;
+	letter-spacing: -0.1ex;
 }
 .start, .end {
 	color: #2c3e50;
@@ -42,7 +45,7 @@ body {
 .word-multi:after {
 	content: '[each]';
 	color: black;
-	font-weight: bold;
+	font-weight: 700;
 }
 .hero {
 	background-color: #a5a5a5 !important;
@@ -52,4 +55,5 @@ body {
 .mini-hero {
 	background-color: #d5d5d5 !important;
 	color: #101010 !important;
+	border-bottom: 1px dashed #101010 !important;
 }
