@@ -1,0 +1,24 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<!-- <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"> -->
+	<script src="angular.js"></script>
+	<script type="text/javascript" src="jq.js"></script>
+	<script type="text/javascript" src="http://code.angularjs.org/1.2.9/angular.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<script type="text/javascript" src="mCtrl.js"></script>
+</head>
+<body ng-app='app' ng-controller="mCtrl">
+	<input name="string" ng-model='STRING' ng-change="shader()"/>
+
+	<div class="container">
+
+		<span ng-repeat="word in LIST" ng-class="word.type" ng-style="setStyle(word)"
+		string data="{{word.id}}" spanid="word.id" spantype="word.type" ng-bind="setWord(word)"> 
+		</span>
+
+
+	</div>
+
+</body>
+</html>

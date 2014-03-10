@@ -1,0 +1,55 @@
+input {
+	width: 80%;
+	margin: 0px auto;
+	height: 40px;
+	display: inline-block;
+	line-height: 40px;
+	font-size: 30px;
+	padding: 0px 10px;
+	border: 1px solid #101010;
+	outline: none;
+	margin-bottom: 10px;
+}
+body {
+	text-align: center;
+}
+.container {
+	display: inline-block;
+	width: 80%;
+	height: 400px;
+	border: 1px solid #101010;
+	/*background-color: #e5e5e5;*/
+}
+.container span {
+	float: left;
+	height: 30px;
+	line-height: 30px;
+	width: auto;
+	font-size: 20px;
+	padding: 5px 5px;
+	border: 1px solid #e5e5e5;
+}
+.word, .word-multi {
+	color: #c0392b;
+	font-weight: bold;
+}
+.or, .and, .not {
+	color: #27ae60;
+}
+.start, .end {
+	color: #2c3e50;
+}
+.word-multi:after {
+	content: '[each]';
+	color: black;
+	font-weight: bold;
+}
+.hero {
+	background-color: #a5a5a5 !important;
+	color: black !important;
+	border: 1px solid black !important;
+}
+.mini-hero {
+	background-color: #d5d5d5 !important;
+	color: #101010 !important;
+}
