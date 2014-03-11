@@ -15,28 +15,28 @@ app.controller('mCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
 		if (regexp.exec(text)) {
 			return 'end';
 		};
-		regexp = /(или )/gi; 
-		if (regexp.exec(text)) {
+		regexp1 = /(или )/gi; 
+		// if (regexp.exec(text)) {
+		// 	return 'or';
+		// };
+		regexp2 = /(or )/gi; 
+		if (regexp1.exec(text) || regexp2.exec(text)) {
 			return 'or';
 		};
-		regexp = /(or )/gi; 
-		if (regexp.exec(text)) {
-			return 'or';
-		};
-		regexp = /(и )/gi; 
-		if (regexp.exec(text)) {
+		regexp1 = /(и )/gi; 
+		// if (regexp.exec(text)) {
+		// 	return 'and';
+		// };
+		regexp2 = /(and )/gi; 
+		if (regexp1.exec(text) || regexp2.exec(text)) {
 			return 'and';
 		};
-		regexp = /(and )/gi; 
-		if (regexp.exec(text)) {
-			return 'and';
-		};
-		regexp = /(не )/gi; 
-		if (regexp.exec(text)) {
-			return 'not';
-		};
-		regexp = /(not )/gi; 
-		if (regexp.exec(text)) {
+		regexp1 = /(не )/gi; 
+		// if (regexp.exec(text)) {
+		// 	return 'not';
+		// };
+		regexp2 = /(not )/gi; 
+		if (regexp1.exec(text) || regexp2.exec(text)) {
 			return 'not';
 		};
 		regexp = /(.+\*)/gi;
@@ -63,7 +63,7 @@ app.controller('mCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
 		} else return word.word;
 	};
 	$timeout(function() {
-		$(angular.element('input')).focus();
+		$(angular.element('textarea')).focus();
 	});
 
 	$scope.setStyle = function(word) {
@@ -157,10 +157,31 @@ app.directive('string', [function () {
 			spanId: '=spanid',
 			spanType: '=spantype'
 		},
-		controller : function($scope) {
-			$scope.stack = [];
-		},
 		link: function (scope, elem, attrs) {
+			var scobe = [];
+			setTimeout(function() {
+				var list = angular.element(document.querySelectorAll("[types]"));
+				for (i in list) {
+					if (list[i].attributes && (list[i].attributes.types.nodeValue == 'start')) {
+						scobe.push(list[i].attributes.data.nodeValue);
+					}
+					else if (scobe.length > 0 && list[i].attributes && (list[i].attributes.types.nodeValue == 'end')) {
+						scobe.splice(scobe.length-1, 1);
+					}
+				}
+				if (scobe.length !=0) {
+					unclosed = angular.element('[data=' + scobe[scobe.length-1] + ']')[0];
+					while (unclosed) {
+						if ((unclosed.attributes.types.nodeValue == 'start') && (unclosed.attributes.data.nodeValue == scobe[scobe.length-1])) {
+							$(unclosed).addClass('unclosed-scobe');
+						} else {
+							$(unclosed).addClass('unclosed-inner');
+						}
+						unclosed = unclosed.nextElementSibling;
+					}
+				}
+			})
+
 			elem.on('mouseenter', function() {
 				if (scope.spanType == 'start' || scope.spanType == 'end') {
 					a = angular.element(document.querySelectorAll("[data]"));

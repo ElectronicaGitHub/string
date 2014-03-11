@@ -65,3 +65,25 @@ body {
 	color: #101010 !important;
 	border-bottom: 1px dashed #101010 !important;
 }
+.unclosed-scobe {
+	position: relative;
+	background-color: rgba(192, 57, 43,.7) !important;
+	border-bottom: 1px solid rgba(192, 57, 43,1.0) !important;
+}
+.unclosed-scobe:after {
+	content: 'Незакрытая скобка';
+	position: absolute;
+	width: 130px;
+	font-size: 12px;
+	bottom: -32px;
+	left:0;
+	background-color: #27ae60;
+	color: white;
+	letter-spacing: -.05ex;
+	text-shadow: 0px 1px 0px rgba(0,0,0,.5);
+
+}
+.unclosed-inner {
+	background-color: rgba(192, 57, 43,.2);
+	border-bottom: 1px solid rgba(192, 57, 43,1.0) !important;
+}
