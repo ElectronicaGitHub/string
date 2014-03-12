@@ -34,7 +34,7 @@ body {
 	width: auto;
 	font-size: 20px;
 	padding: 5px 5px;
-	border: 1px solid transparent;
+	border: 1px solid #c5c5c5;
 	font-family: 'Open Sans', sans-serif;
 }
 .word, .word-multi {
