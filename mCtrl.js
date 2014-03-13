@@ -1,13 +1,34 @@
 app = angular.module('app', []);
 
+var range_number = null;
+
 app.controller('mCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
 
 	var getRandom = function() {
 		return Math.floor(Math.random()*3600) + Math.random().toString(36).substring(7);
 	};
 	var getType = function(text) {
-		text = text + ' ';
-		regexp = /(\()/g
+		range_number = null;
+		text = ' ' + text + ' ';
+		regexp = /([а-я]+\*\~)|(\d+)/gi;
+		if (a = text.match(regexp)) {
+			if (a.length==2) {
+				range_number = a[1]; 
+				return 'word-multi';
+			}
+		};
+		regexp = /([а-я]+\~)|(\d+)/gi;
+		if (a = text.match(regexp)) {
+			if (a.length==2) {
+				range_number = a[1]; 
+				return 'word';
+			}
+		};
+		regexp = /(.+\*)/gi;
+		if (regexp.exec(text)) {
+			return 'word-multi';
+		};
+		regexp = /(\()/g;
 		if (regexp.exec(text)) {
 			return 'start';
 		};
@@ -15,33 +36,20 @@ app.controller('mCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
 		if (regexp.exec(text)) {
 			return 'end';
 		};
-		regexp1 = /(или )/gi; 
-		// if (regexp.exec(text)) {
-		// 	return 'or';
-		// };
-		regexp2 = /(or )/gi; 
+		regexp1 = /( или )/gi; 
+		regexp2 = /( or )/gi; 
 		if (regexp1.exec(text) || regexp2.exec(text)) {
 			return 'or';
 		};
-		regexp1 = /(и )/gi; 
-		// if (regexp.exec(text)) {
-		// 	return 'and';
-		// };
-		regexp2 = /(and )/gi; 
+		regexp1 = /( и )/gi; 
+		regexp2 = /( and )/gi; 
 		if (regexp1.exec(text) || regexp2.exec(text)) {
 			return 'and';
 		};
-		regexp1 = /(не )/gi; 
-		// if (regexp.exec(text)) {
-		// 	return 'not';
-		// };
-		regexp2 = /(not )/gi; 
+		regexp1 = /( не )/gi; 
+		regexp2 = /( not )/gi; 
 		if (regexp1.exec(text) || regexp2.exec(text)) {
 			return 'not';
-		};
-		regexp = /(.+\*)/gi;
-		if (regexp.exec(text)) {
-			return 'word-multi';
 		};
 		regexp = /(.+)/gi; 
 		if (regexp.exec(text)) {
@@ -49,11 +57,16 @@ app.controller('mCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
 		};
 	};
 	$scope.setWord = function(word) {
-		if (word.type == 'word-multi') {
+		console.log(word);
+		if (word.range && (word.type == 'word-multi')) {
+			res = word.word.match(/(.*[^\*\~\d+])|(.*[^\*\~])/g)[0];
+			return res;
+		} else if (word.range && (word.type == 'word')) {
+			res = word.word.match(/(.*[^\~\d])|(.*[^\~])|(.*)/g)[0];
+			return res;
+		} else if (!word.range && (word.type == 'word-multi')) {
 			res = word.word.substring(0, word.word.length - 1);
 			return res;
-		} else if (word.type == 'start') {
-			return word.word;
 		} else if (word.type == 'and') {
 			return 'AND';
 		} else if (word.type == 'or') {
@@ -71,6 +84,7 @@ app.controller('mCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
 			a = Math.ceil(parseInt(word.id, 10) / 10);
 			return {
 				'background-color':'hsl(' + a + ', 50%, 60%)'
+				// 'background-color' : 'rgb(' + a + ', ' + a + ', ' + a + ')'
 			};
 		};
 	};
@@ -80,7 +94,8 @@ app.controller('mCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
 
 	$scope.shader = function() {
 		$scope.LIST = [];
-		$scope.LIST = $scope.STRING.split(' ');
+		// $scope.LIST = $scope.STRING.split(' ');
+		$scope.LIST = $scope.STRING.match(/(\(|\)|[^(\(|\)) ]+)/g);
 		$scope.SIDERLIST = [];
 		$scope.OBJECTEDLIST = [];
 
@@ -90,6 +105,9 @@ app.controller('mCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
 				'word' : localElem,
 				'id' : getRandom(),
 				'type' : getType(localElem)
+			};
+			if (range_number) {
+				$scope.LIST[i].range = range_number;
 			};
 		}
 		for (i in $scope.LIST) {
@@ -120,7 +138,7 @@ app.controller('mCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
 				}
 			}
 		}
-		// console.log('$scope.LIST ', $scope.LIST);
+		console.log('$scope.LIST ', $scope.LIST);
 		// var open_last = null, 
 		// 	close_first = null, 
 		// 	local_arr = [];
