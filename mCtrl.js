@@ -10,19 +10,13 @@ app.controller('mCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
 	var getType = function(text) {
 		range_number = null;
 		text = ' ' + text + ' ';
-		regexp = /([а-я]+\*\~)|(\d+)/gi;
+		regexp = /(\"(.+)\")|(\d+)|(\"(.+)\")/gi;
+		console.log(text.match(regexp));
 		if (a = text.match(regexp)) {
 			if (a.length==2) {
 				range_number = a[1]; 
-				return 'word-multi';
 			}
-		};
-		regexp = /([а-я]+\~)|(\d+)/gi;
-		if (a = text.match(regexp)) {
-			if (a.length==2) {
-				range_number = a[1]; 
-				return 'word';
-			}
+			return 'phrase';
 		};
 		regexp = /(.+\*)/gi;
 		if (regexp.exec(text)) {
@@ -58,13 +52,7 @@ app.controller('mCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
 	};
 	$scope.setWord = function(word) {
 		console.log(word);
-		if (word.range && (word.type == 'word-multi')) {
-			res = word.word.match(/(.*[^\*\~\d+])|(.*[^\*\~])/g)[0];
-			return res;
-		} else if (word.range && (word.type == 'word')) {
-			res = word.word.match(/(.*[^\~\d])|(.*[^\~])|(.*)/g)[0];
-			return res;
-		} else if (!word.range && (word.type == 'word-multi')) {
+		if (word.type == 'word-multi') {
 			res = word.word.substring(0, word.word.length - 1);
 			return res;
 		} else if (word.type == 'and') {
@@ -95,7 +83,8 @@ app.controller('mCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
 	$scope.shader = function() {
 		$scope.LIST = [];
 		// $scope.LIST = $scope.STRING.split(' ');
-		$scope.LIST = $scope.STRING.match(/(\(|\)|[^(\(|\)) ]+)/g);
+		$scope.LIST = $scope.STRING.match(/\)|\(|(\"([а-я ])+\"\~(\d)+|\"([а-я ])+\")|([^\)|\(|\"(.+)+\"\~(\d) ]+)/gi);
+
 		$scope.SIDERLIST = [];
 		$scope.OBJECTEDLIST = [];
 
@@ -244,4 +233,10 @@ app.directive('string', [function () {
 			})
 		}
 	};
+
+
+	// regexp для '' ""
+	// \"(.*)+\"\~(\d+)|\'(.*)+\'\~(\d+)
+
+
 }])
