@@ -14,9 +14,9 @@
 
 	<div class="container">
 
-		<span ng-repeat="word in LIST" ng-class="word.type" ng-style="setStyle(word)"
-		string data="{{word.id}}" types="{{ word.type }}" spanid="word.id" spantype="word.type" ng-bind="setWord(word)"> 
-		</span>
+		<div ng-repeat="word in LIST" ng-class="word.type" ng-style="setStyle(word)"
+		string data="{{word.id}}" types="{{ word.type }}" spanid="word.id" spantype="word.type"> {{ setWord(word) }} <span ng-if="word.range">[~{{ word.range }}]</span>
+		</div>
 
 
 	</div>

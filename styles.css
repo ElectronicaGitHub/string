@@ -27,8 +27,9 @@ body {
 	background-color: #d5d5d5;
 	box-shadow: 0px 1px 8px rgba(0,0,0,.5);
 }
-.container span {
+.container div {
 	float: left;
+	display: inline-block;
 	height: 30px;
 	line-height: 30px;
 	width: auto;
@@ -36,6 +37,9 @@ body {
 	padding: 5px 5px;
 	border: 1px solid #c5c5c5;
 	font-family: 'Open Sans', sans-serif;
+}
+.container div span {
+	color: black;
 }
 .word, .word-multi {
 	color: #c0392b;
@@ -51,7 +55,7 @@ body {
 	/*color: white;*/
 }
 .word-multi:after {
-	content: '[each]';
+	content: '[*]';
 	color: black;
 	font-weight: 700;
 }
