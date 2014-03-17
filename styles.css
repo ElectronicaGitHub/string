@@ -35,13 +35,13 @@ body {
 	width: auto;
 	font-size: 20px;
 	padding: 5px 5px;
-	border: 1px solid #c5c5c5;
+	border: 1px solid transparent;
 	font-family: 'Open Sans', sans-serif;
 }
 .container div span {
 	color: black;
 }
-.word, .word-multi {
+.word, .word-multi, .phrase {
 	color: #c0392b;
 	font-weight: 700;
 }
@@ -49,9 +49,11 @@ body {
 	color: #27ae60;
 	font-weight: 800;
 	letter-spacing: -0.1ex;
+
 }
 .start, .end {
 	color: #2c3e50;
+	margin: 0 2px;
 	/*color: white;*/
 }
 .word-multi:after {
@@ -59,15 +61,34 @@ body {
 	color: black;
 	font-weight: 700;
 }
+.phrase:before, .phrase:after {
+	content: '"';
+	color: #8e44ad;
+	font-weight: bold;
+}
 .hero {
 	background-color: #a5a5a5 !important;
 	color: black !important;
 	border: 1px solid black !important;
 }
 .mini-hero {
-	background-color: #d5d5d5 !important;
+	background-color: #b0b0b0 !important;
 	color: #101010 !important;
 	border-bottom: 1px dashed #101010 !important;
+}
+.mini-hero.not {
+    color: #c0392b !important;
+}
+.mini-hero.or , .mini-hero.and {
+   color: #2980b9 !important; 
+}
+.mini-hero.start, .mini-hero.end {
+    color: #d35400 !important;
+    background-color: #bdc3c7 !important;
+}
+.mini-hero.word, .mini-hero.phrase, .mini-hero.word-multi {
+    color: rgba(236, 240, 241,1.0) !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,.5);
 }
 .unclosed-scobe {
 	position: relative;
