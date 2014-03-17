@@ -11,7 +11,6 @@ app.controller('mCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
 		range_number = null;
 		text = ' ' + text + ' ';
 		regexp = /(\"(.+)\")|(\d+)|(\"(.+)\")/gi;
-		console.log(text.match(regexp));
 		if (a = text.match(regexp)) {
 			if (a.length==2) {
 				range_number = a[1]; 
@@ -51,8 +50,11 @@ app.controller('mCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
 		};
 	};
 	$scope.setWord = function(word) {
-		console.log(word);
-		if (word.type == 'word-multi') {
+		if (word.type == 'phrase') {
+			res = word.word.match(/\"|\'|([а-я ]+)/gi);
+			console.log(res);
+			return res[1];
+		} else if (word.type == 'word-multi') {
 			res = word.word.substring(0, word.word.length - 1);
 			return res;
 		} else if (word.type == 'and') {
